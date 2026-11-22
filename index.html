@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mood Garden</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- HOME SCREEN: the first page visitors see. -->
+  <section id="home" class="screen active">
+    <nav class="nav">
+      <div class="brand">Mood Garden</div>
+      <div class="nav-note">A small space for your feelings</div>
+    </nav>
+
+    <div class="hero">
+      <div>
+        <h1><span class="title-line title-line-one">Grow what</span><span class="title-line title-line-two">you feel.</span></h1>
+        <p>Mood Garden is a small place where feelings turn into flowers. Your garden can look different every day.</p>
+        <button class="main-button" onclick="showScreen('guide')">Discover your flowers →</button>
+      </div>
+
+      <div class="hero-garden">
+        <div class="sun"></div><div class="cloud"></div>
+        <div class="home-bloom bloom-one"></div>
+        <div class="home-bloom bloom-two"></div>
+        <div class="home-bloom bloom-three"></div>
+        <div class="home-bloom bloom-four"></div>
+      </div>
+    </div>
+    <div class="creator-signature">Jimena Berecochea</div>
+  </section>
+
+  <!-- FLOWER GUIDE: introduces the feeling-to-flower idea. -->
+  <section id="guide" class="screen">
+    <div class="page-head">
+      <button class="back" onclick="showScreen('home')">← Back to home</button>
+      <div class="brand">Mood Garden</div>
+    </div>
+
+    <div class="guide-intro">
+      <h1>Every feeling has a flower.</h1>
+      <p>There is no right or wrong way to feel. Choose a flower for how you feel today.</p>
+    </div>
+
+    <div class="cards" id="guideCards"></div>
+    <p class="guide-tap-message" id="guideTapMessage">Tap a flower to learn about it.</p>
+
+    <div class="guide-action">
+      <button class="main-button" id="guidePlantButton" onclick="showScreen('game-menu')">Enter your garden →</button>
+    </div>
+  </section>
+
+  <!-- GAME MENU: lets the visitor choose one of the four activities. -->
+  <section id="game-menu" class="screen">
+    <div class="page-head">
+      <button class="back" onclick="showScreen('guide')">← Back to flower guide</button>
+      <div class="brand">Mood Garden</div>
+    </div>
+    <div class="game-menu-intro">
+      <h1>Play in your garden.</h1>
+      <p>Choose a game and play with your flowers.</p>
+    </div>
+    <div class="game-menu-box">
+      <button class="game-choice" onclick="showScreen('garden-page')"><span class="game-icon">01</span><span><strong>Emotion Garden</strong><small>Give every feeling a flower and grow your garden.</small></span></button>
+      <button class="game-choice" onclick="showScreen('water-game')"><span class="game-icon">02</span><span><strong>Water &amp; Bloom</strong><small>Water a pot and watch its flowers grow.</small></span></button>
+      <button class="game-choice" onclick="showScreen('match-game')"><span class="game-icon">03</span><span><strong>Flower Match</strong><small>Find two matching flowers.</small></span></button>
+      <button class="game-choice" onclick="showScreen('bouquet-game')"><span class="game-icon">04</span><span><strong>Build a Bouquet</strong><small>Pick and arrange flowers your way.</small></span></button>
+    </div>
+  </section>
+
+  <!-- EMOTION GARDEN: clicking a feeling plants its matching flower. -->
+  <section id="garden-page" class="screen">
+    <div class="page-head">
+      <button class="back" onclick="showScreen('game-menu')">← Back to games</button>
+      <div class="brand">Mood Garden</div>
+    </div>
+
+    <main class="garden-game-layout">
+      <section class="garden-controls">
+        <h3>Choose a feeling</h3>
+        <p>Pick how you feel. Your flower will grow in its own part of the garden.</p>
+        <div class="moods">
+          <button class="mood" style="--dot:#ffd98c" onclick="addFlower('Happy')">Happy</button>
+          <button class="mood" style="--dot:#a9cbed" onclick="addFlower('Sad')">Sad</button>
+          <button class="mood" style="--dot:#b9ddd6" onclick="addFlower('Calm')">Calm</button>
+          <button class="mood" style="--dot:#c6abd9" onclick="addFlower('Anxious')">Anxious</button>
+          <button class="mood" style="--dot:#f2b0bc" onclick="addFlower('Loved')">Loved</button>
+          <button class="mood" style="--dot:#f5b38a" onclick="addFlower('Excited')">Excited</button>
+        </div>
+        <div class="message" id="message">Your garden is waiting for its first flower.</div>
+        <button class="reset" onclick="resetGarden()">Start a new garden</button>
+        <button class="finish" onclick="finishGarden()">Finish my garden</button>
+      </section>
+
+      <section class="garden-board" id="gardenBoard">
+        <h3>Your emotion garden</h3>
+        <div class="garden-hint" id="counter">0 flowers planted</div>
+        <div class="sun"></div><div class="cloud"></div><div class="garden-path"></div>
+        <div class="beds" id="beds">
+          <div class="soil-row one"></div>
+          <div class="soil-row two"></div>
+          <div class="soil-row three"></div>
+          <div class="emotion-bed" id="bed-Happy"><div class="bed-flowers"></div></div>
+          <div class="emotion-bed" id="bed-Calm"><div class="bed-flowers"></div></div>
+          <div class="emotion-bed" id="bed-Excited"><div class="bed-flowers"></div></div>
+          <div class="emotion-bed" id="bed-Sad"><div class="bed-flowers"></div></div>
+          <div class="emotion-bed" id="bed-Loved"><div class="bed-flowers"></div></div>
+          <div class="emotion-bed" id="bed-Anxious"><div class="bed-flowers"></div></div>
+        </div>
+      </section>
+    </main>
+  </section>
+
+  <!-- WATER & BLOOM: drag the watering can onto a chosen plant. -->
+  <section id="water-game" class="screen">
+    <div class="page-head"><button class="back" onclick="showScreen('game-menu')">← Back to games</button><div class="brand">Mood Garden</div></div>
+    <div class="game-menu-intro"><h1>Water &amp; Bloom</h1><p>Choose a pot, then drag the watering can to it.</p></div>
+    <div class="game-stage" id="waterStage">
+      <div class="water-count"><span id="waterCount">0</span> times watered</div>
+      <button class="water-reset" onclick="resetWaterGame()">Start again ↻</button>
+      <div class="sun"></div><div class="pot-shelf"></div>
+      <div class="water-shelf-grid" id="waterShelf"></div>
+      <button class="watering-can" id="wateringCan" aria-label="Drag the watering can to a pot"><span>Drag me</span></button>
+    </div>
+  </section>
+
+  <!-- FLOWER MATCH: find pairs of identical flowers. -->
+  <section id="match-game" class="screen">
+    <div class="page-head"><button class="back" onclick="showScreen('game-menu')">← Back to games</button><div class="brand">Mood Garden</div></div>
+    <div class="game-menu-intro"><h1>Flower Match</h1><p>Find two flowers that are the same. Matching pairs disappear.</p></div>
+    <div class="match-wrap"><div class="match-score">Pairs: <strong id="matchScore">0</strong></div><p class="guide-tap-message" id="matchMessage">Tap a flower, then find its match.</p><div class="match-board" id="matchBoard"></div><button class="reset" onclick="buildMatchGame()">Start a new game</button></div>
+    <div class="match-complete" id="matchComplete" role="dialog" aria-modal="true"><div class="match-complete-card"><h2>You did it!</h2><p>You found every flower pair. Want to play again?</p><div class="feeling-note"><strong>♡ A little note</strong><p>Every feeling has a place here. Feelings come and go, and it is okay to talk about them with someone you trust.</p></div><button class="main-button" onclick="restartMatchGame()">Play again →</button></div></div>
+  </section>
+
+  <!-- BOUQUET BUILDER: choose flowers and place them by dragging. -->
+  <section id="bouquet-game" class="screen">
+    <div class="page-head"><button class="back" onclick="showScreen('game-menu')">← Back to games</button><div class="brand">Mood Garden</div></div>
+    <div class="game-menu-intro"><h1>Build a Bouquet</h1><p>Pick flowers and arrange them your way.</p></div>
+    <div class="bouquet-layout">
+      <aside class="bouquet-palette"><h3>Flower shelf</h3><div id="bouquetChoices"></div><button class="reset" onclick="resetBouquet()">Start a new bouquet</button></aside>
+      <section class="bouquet-canvas" id="bouquetCanvas"><h3>Your bouquet</h3><div class="bouquet-area" id="bouquetArea"></div><div class="bouquet-paper"></div><div class="bouquet-opening" aria-hidden="true"></div><div class="bouquet-ribbon" aria-hidden="true"></div><p class="bouquet-message" id="bouquetMessage">Pick a flower, then drag it into your bouquet.</p><div class="bouquet-actions"><button class="bouquet-reset" onclick="resetBouquet()">Start again ↻</button><button class="bouquet-finish" onclick="finishBouquet()">Finish bouquet →</button></div></section>
+    </div>
+  </section>
+
+  <!-- REUSABLE FINISH CARD: appears after the garden or bouquet is complete. -->
+  <div class="summary-wrap" id="summaryWrap" role="dialog" aria-modal="true" aria-labelledby="summaryTitle">
+    <div class="summary-card">
+      <button class="close-summary" onclick="closeSummary()" aria-label="Close">×</button>
+      <div id="summaryFlower"></div>
+      <h2 id="summaryTitle">Your garden bloomed!</h2>
+      <p id="summaryText"></p>
+      <div class="feeling-note">
+        <strong>♡ A little note</strong>
+        <p>Every feeling has a place here. Feelings come and go, and it is okay to talk about them with someone you trust.</p>
+      </div>
+      <button class="main-button" id="summaryAction" onclick="closeSummary()">Keep growing</button>
+    </div>
+  </div>
+
+  <!-- FLOWER DETAIL CARD: shows extra information from the flower guide. -->
+  <div class="flower-card-wrap" id="flowerCardWrap" role="dialog" aria-modal="true" aria-labelledby="flowerCardTitle">
+    <div class="flower-card">
+      <button class="close-summary" onclick="closeFlowerCard()" aria-label="Close">×</button>
+      <div id="bigFlower"></div>
+      <h2 id="flowerCardTitle"></h2>
+      <p id="flowerCardText"></p>
+      <button class="main-button" onclick="openGardenFromGuide()" id="flowerCardButton">Enter your garden →</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
